@@ -26,7 +26,7 @@ public class Ocean {
 
 
     public String getShipAt(int row, int column){
-        return shiptype;
+        return null;
     }
 
     public  boolean shootAt(int row, int column){
