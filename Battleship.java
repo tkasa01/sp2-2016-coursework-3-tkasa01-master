@@ -1,7 +1,25 @@
 package battleship;
 import java.util.*;
-/**
- * Created by tkasa on 20/12/2016.
- */
+
 public class Battleship extends Ship {
+
+    /**
+     * constructor
+     */
+    public Battleship() {
+
+        super(4);
+    }
+
+    /**
+     *
+     * @return the string name of the ship
+     */
+    @Override
+    public String getShipType() {
+        return "battleship";
+    }
+
+
+
 }
