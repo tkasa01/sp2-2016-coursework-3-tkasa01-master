@@ -3,27 +3,78 @@ package battleship;
 /**
  * Created by tkasa on 20/12/2016.
  */
-public class SimpleShip {
-    private int [] location;
-    private int numberOfHits;
+public class ShipTest {
+    public Ship battleship = new Battleship();
+    public Ship cruiser = new Cruiser();
+    public Ship destroyer = new Destroyer();
+    public Ship emptySea = new EmptySea();
+    public Ship submarine = new Submarine();
 
-    public void setLocations(int [] loc){
-        location = loc;
+      @Test
+    public void testGetLength(){
+        assertEquals(battleship.getLength(),4);
+        assertEquals(cruiser.getLength(),3);
+        assertEquals(destroyer.getLength(),2);
+        assertEquals(emptySea.getLength(),1);
+        assertEquals(submarine.getLength(),1);
     }
 
-    public String checkGuess (String Userguess){
+    @Test
+    public void testBowColumn(){
+        battleship.setBowRow(0);
+        assertEquals(battleship.getBowRow(),0);
 
-        String result = "miss";
+        cruiser.setBowRow(9);
+        assertEquals(cruiser.getBowRow(),9);
 
-        int guess = Integer.parseInt(Userguess);
-
-        for (int loc :location){
-            if( guess == loc){
-
-                result = numberOfHits == location.length ? "kill" : "hit";
-                break;
-            }
-        }
+        destroyer.setBowColumn(4);
+        assertEquals(destroyer.getBowColumn(),4);
 
     }
+
+    @Test
+    public void testGetShipType() {
+
+        assertEquals("battleship",battleship.getShipType());
+        assertEquals("submarine",submarine.getShipType());
+        assertEquals("destroyer",destroyer.getShipType());
+        assertEquals("empty sea",emptySea.getShipType());
+        assertEquals("cruiser",cruiser.getShipType());
+    }
+
+    @Test
+    public void testIsHorizontal() {
+        battleship.setHorizontal(true);
+        assertTrue(battleship.isHorizontal());
+
+        battleship.setHorizontal(false);
+        assertFalse(battleship.isHorizontal());
+
+    }
+
+    @Test
+    public void testIsSunk()throws Exception {
+        submarine.setBowRow(5);
+        submarine.setBowColumn(4);
+        submarine.setHorizontal(true);
+        assertFalse(submarine.isSunk());
+        submarine.shootAt(5,4);
+        assertTrue(submarine.isSunk());
+
+        battleship.setBowRow(2);
+        battleship.setBowColumn(7);
+        battleship.setHorizontal(false);
+        assertFalse(battleship.isSunk());
+
+        battleship.shootAt(2,7);
+        assertFalse(battleship.isSunk());
+        battleship.shootAt(3,7);
+        assertFalse(battleship.isSunk());
+        battleship.shootAt(4,7);
+        assertFalse(battleship.isSunk());
+        battleship.shootAt(5,7);
+        assertTrue(battleship.isSunk());
+    }
+
+
 }
